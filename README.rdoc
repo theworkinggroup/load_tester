@@ -1,0 +1,79 @@
+= Load Tester
+
+Author:: {The Working Group, Inc}[http://www.twg.ca/]
+Version:: 0.1
+
+Load tester is a Rails plugin to help you automate load testing on your web app by using httperf and autobench.
+
+
+== Installation
+
+=== 1. Install the plugin
+
+As with any typical Rails plugin, installation is done with script/plugin:
+
+  % script/plugin install git://github.com/theworkinggroup/load_tester.git
+  
+Create a /config/load_test.yml file:
+
+  test1:
+    single_host: 
+    host1: pms.local
+    port1: 80 
+    uri1: /
+    low_rate: 10
+    high_rate: 20
+    rate_step: 5
+    num_conn: 10
+    num_call: 1 
+    timeout: 5
+    file: results.tsv
+  
+
+
+=== 2. Install Httperf (http://www.hpl.hp.com/research/linux/httperf/)
+
+Httperf is a tool for measuring web server performance. It provides a flexible facility for generating various HTTP workloads and for measuring server performance.
+    
+  wget http://httperf.googlecode.com/files/httperf-0.9.0.tar.gz
+  tar -xvzf httperf-0.9.0.tar.gz
+  cd httperf-0.9.0
+  sudo ./configure
+  sudo make
+  sudo make install
+
+
+
+=== 3. Install Autobench (http://www.xenoclast.org/autobench)
+
+Autobench automates the benchmarking of web servers using httperf
+
+  wget http://www.xenoclast.org/autobench/downloads/autobench-2.1.2.tar.gz
+  tar -xvzf autobench-2.1.2.tar.gz
+  sudo make
+  sudo make install
+
+
+<b> Here's what all the parameters mean</b>
+  autobench --single_host --host1 localhost --port1 3000 \
+    --uri1 /posts         # Run a series of httperf tests
+    --num_conn 700        # each doing 700 requets
+    --low_rate 50         # the first with 50 requests per second
+    --rate_step 10        # the next with 10 more req/second
+    --high_rate 120       # until you reach 120 req/second
+    --num_call 1          # with  1 request per connection
+    --timeout 5           # and a 5 second client timeout
+    --file results.tsv
+    
+    
+== Usage
+
+  rake load_tester:test
+
+
+
+
+(C) 2009 {The Working Group, Inc}[http://www.twg.ca/]
+
+
+
