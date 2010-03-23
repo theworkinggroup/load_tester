@@ -14,7 +14,7 @@ As with any typical Rails plugin, installation is done with script/plugin:
 
   % script/plugin install git://github.com/theworkinggroup/load_tester.git
   
-Create a /config/load_test.yml file:
+Create a /config/load_tester.yml file:
 
   test1:
     single_host: 

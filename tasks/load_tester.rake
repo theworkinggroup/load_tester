@@ -6,15 +6,16 @@ namespace :load_tester do
   task :test => :environment do
     STDOUT.sync = true # activate auto-flush
     puts "Starting load tests in #{Rails.env.upcase} environment"
-    if !File.exists?(RAILS_ROOT+'/config/load_test.yml')
-      puts "ERROR: Couldn't find #{RAILS_ROOT}/config/load_test.yml"
+    config_file = "#{RAILS_ROOT}/config/load_tester.yml"
+    if !File.exists?(config_file)
+      puts "ERROR: Couldn't find #{config_file}"
     else
       logger = Logger.new(File.join(RAILS_ROOT, 'log', "load_test_#{RAILS_ENV}.log"))
       dst_folder = File.join(RAILS_ROOT, 'tmp', 'load_test')
       FileUtils.mkdir_p(dst_folder)
       html_output = HtmlOutput.new
       
-      load_test_config = YAML::load(File.open(RAILS_ROOT+'/config/load_test.yml'))
+      load_test_config = YAML::load(File.open(config_file))
       load_test_config.each do |test|
         puts '-' * 50
         puts test[0]
