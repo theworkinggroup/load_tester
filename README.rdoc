@@ -38,8 +38,8 @@ Httperf is a tool for measuring web server performance. It provides a flexible f
   wget http://httperf.googlecode.com/files/httperf-0.9.0.tar.gz
   tar -xvzf httperf-0.9.0.tar.gz
   cd httperf-0.9.0
-  sudo ./configure
-  sudo make
+  ./configure
+  make
   sudo make install
 
 
@@ -50,7 +50,8 @@ Autobench automates the benchmarking of web servers using httperf
 
   wget http://www.xenoclast.org/autobench/downloads/autobench-2.1.2.tar.gz
   tar -xvzf autobench-2.1.2.tar.gz
-  sudo make
+  cd autobench-2.1.2
+  make
   sudo make install
 
 
